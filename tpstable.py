@@ -4,7 +4,7 @@ TPS File Table
 
 from construct import Array, BitField, BitStruct, Byte, Const, CString, Embed, Enum, Flag, If, Padding, Struct, ULInt16
 
-from .tpsrecord import TpsRecordsList
+from tpsrecord import TpsRecordsList
 
 
 FIELD_TYPE_STRUCT = Enum(Byte('type'),

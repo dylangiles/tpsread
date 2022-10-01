@@ -6,7 +6,7 @@ from warnings import warn
 
 from construct import Array, Byte, Struct, ULInt16, ULInt32
 
-from .utils import check_value
+from utils import check_value
 
 
 # Page header

@@ -1,7 +1,7 @@
 from construct import Byte, Bytes, Embed, Enum, IfThenElse, Peek, String, Struct, Switch, UBInt32, ULInt16, ULInt32
 
-from .tpspage import PAGE_HEADER_STRUCT
-from .utils import check_value
+from tpspage import PAGE_HEADER_STRUCT
+from utils import check_value
 
 record_encoding = None
 
