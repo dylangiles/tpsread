@@ -10,6 +10,7 @@ import os.path
 import mmap
 from datetime import date
 import time
+from typing import Any, Dict, List, Union
 from warnings import warn
 from binascii import hexlify
 
@@ -222,3 +223,38 @@ class TPS:
 # utils
 # convert date
 # convert time
+
+def topread(filename: str, password: Union[str, None]) -> List[Dict[str, Any]]:
+    tps = (
+        TPS(
+            filename,
+            encoding="cp1251",
+            cached=True,
+            check=True,
+            current_tablename="UNNAMED",
+        )
+        if password is None
+        else TPS(
+            filename,
+            password=password,
+            encoding="cp1251",
+            cached=True,
+            check=True,
+            current_tablename="UNNAMED",
+        )
+    )
+
+    first_column_name = list(next(iter(tps)).keys())[1].replace("b'", "").replace("'", "")
+    position = first_column_name.find(":")
+    prefix = first_column_name[:position + 1] if position != -1 else None
+
+    def replace_key(tpskey: str):
+        key = tpskey.replace("b'", "").replace("'", "")
+        if prefix != None:
+            key = key.replace(prefix, "")
+        if ":" in key: key = key.replace(":", "")
+
+        return key
+
+    keys = {tps_key: replace_key(tps_key) for tps_key in next(iter(tps))}
+    return [{keys[k]: record[k] for k in record} for record in tps]
