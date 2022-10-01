@@ -1,4 +1,4 @@
-from tpsread import topread
+from . import topread
 
 
 if __name__ == "__main__":
